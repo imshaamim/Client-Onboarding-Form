@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Client Onboarding Form | WeGotSites</title>
+<meta name="theme-color" content="#fafafa">
+<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' rx='24' fill='black'/%3E%3Cpath d='M25 30L45 80L65 30' stroke='white' stroke-width='12' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M55 30L75 80L95 30' stroke='white' stroke-width='12' stroke-linecap='round' stroke-linejoin='round' opacity='0.5'/%3E%3Ccircle cx='85' cy='20' r='6' fill='%233B82F6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fafafa; --card:#fff; --ink:#000; --body:#4b5563; --muted:#6b7280; --line:#e5e7eb; --line2:#d1d5db;
+  --accent:#3b82f6; --accent-d:#2563eb; --accent-dd:#1d4ed8; --soft:#eff6ff; --ok:#059669; --dark:#0a0a0a;
+  --r:24px; --pill:9999px;
+  --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1);
+  --font:Inter,-apple-system,"system-ui","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--font);-webkit-font-smoothing:antialiased;padding-bottom:96px}
+.wrap{max-width:820px;margin:0 auto;padding:0 18px}
+h1,h2,h3{font-weight:900;line-height:1.05;letter-spacing:-.045em;margin:0 0 .5em}
+h1{font-size:clamp(2.4rem,8vw,3.75rem)} h2{font-size:clamp(1.7rem,5vw,2.3rem)} h3{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+p{margin:0 0 1em}
+.hl{color:var(--accent)}
+
+.top{position:sticky;top:0;z-index:20;background:rgba(250,250,250,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.brand{display:flex;align-items:center;gap:8px;user-select:none}
+.brand svg{width:34px;height:34px;flex:none}
+.wm{font-weight:900;font-size:1.2rem;letter-spacing:-.04em}
+#ttl{font-size:.85rem;color:var(--muted);font-weight:500;margin-left:10px;padding-left:12px;border-left:1px solid var(--line2)}
+#saved{font-size:.78rem;color:var(--muted)}
+.prog{display:flex;gap:4px;max-width:820px;margin:0 auto;padding:0 18px 10px}
+.prog button{flex:1;height:5px;border:0;border-radius:3px;background:var(--line);padding:0;cursor:pointer}
+.prog button.done{background:#bfdbfe}
+.prog button.cur{background:var(--accent)}
+
+main{padding-top:26px}
+.card{background:var(--card);border:1px solid rgba(0,0,0,.06);border-radius:var(--r);padding:32px 28px;box-shadow:0 20px 40px -20px rgba(0,0,0,.12)}
+.kicker{font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-d);margin:0 0 10px}
+.lead{color:var(--body);font-size:1.05rem}
+.optional{display:inline-flex;gap:8px;align-items:center;background:var(--soft);color:var(--accent-dd);padding:9px 14px;border-radius:var(--pill);font-size:.86rem;font-weight:600;margin:6px 0 24px}
+.welcome .optional{display:flex;gap:10px;background:#0f2a66;color:#fff;padding:15px 20px;border-radius:16px;font-size:.95rem;line-height:1.4;margin:8px 0 26px;box-shadow:0 10px 20px -10px rgba(30,58,138,.55)}
+
+.field{margin:0 0 28px}
+.field[hidden]{display:none}
+.field>label,.field>.q{display:block;font-weight:700;margin-bottom:4px;letter-spacing:-.01em}
+.hint{font-size:.86rem;color:var(--muted);margin:0 0 10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 .92rem var(--font);color:#374151;background:#fff;border:1px solid var(--line2);border-radius:var(--pill);padding:9px 16px;cursor:pointer;transition:border-color .12s,background .12s,color .12s}
+.chip:hover{border-color:#9ca3af}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip[aria-pressed="true"]::before{content:"\2713\00a0";color:#60a5fa}
+.cards{display:grid;grid-template-columns:1fr;gap:8px}
+.cardopt{display:flex;align-items:flex-start;gap:14px;width:100%;text-align:left;font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line2);border-radius:16px;padding:14px 16px;cursor:pointer;transition:border-color .12s,background .12s}
+.cardopt:hover{border-color:#9ca3af}
+.cardopt .mk{flex:none;width:20px;height:20px;margin-top:2px;border:1.5px solid var(--line2);border-radius:50%;display:grid;place-items:center;background:#fff}
+.cards.multi .mk{border-radius:6px}
+.cardopt .tx{display:grid;gap:1px}
+.cardopt b{font-size:1rem;font-weight:600;letter-spacing:-.01em}
+.cardopt small{color:var(--muted);font-size:.86rem;line-height:1.4}
+.cardopt[aria-pressed="true"]{border-color:var(--accent);background:var(--soft)}
+.cardopt[aria-pressed="true"] .mk{background:var(--accent);border-color:var(--accent)}
+.cardopt[aria-pressed="true"] .mk::after{content:"\2713";color:#fff;font-size:.72rem;font-weight:700;line-height:1}
+.swatches{display:flex;flex-wrap:wrap;gap:10px}
+.sw{width:64px;font:500 .72rem var(--font);color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-align:center}
+.sw i{display:block;height:42px;border-radius:14px;border:2px solid var(--line);margin-bottom:4px}
+.sw[aria-pressed="true"] i{border-color:var(--accent);box-shadow:0 0 0 3px #3b82f633}
+.sw[aria-pressed="true"]{color:var(--ink);font-weight:700}
+input[type=text],input[type=url],input[type=email],input[type=tel],textarea{width:100%;font:inherit;padding:12px 14px;border:1px solid var(--line2);border-radius:14px;background:#fff;color:var(--ink)}
+select{width:100%;font:inherit;padding:12px 40px 12px 14px;border:1px solid var(--line2);border-radius:14px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center;color:var(--ink);appearance:none;-webkit-appearance:none;cursor:pointer}
+select:focus{outline:3px solid #3b82f640;border-color:var(--accent)}
+input::placeholder,textarea::placeholder{color:#9ca3af}
+input:focus,textarea:focus,.chip:focus-visible,.cardopt:focus-visible,.sw:focus-visible,.btn:focus-visible{outline:3px solid #3b82f640;border-color:var(--accent)}
+textarea{min-height:96px;resize:vertical}
+.other{margin-top:10px;max-width:420px}
+.other[hidden]{display:none}
+.mt{display:grid;gap:8px}
+.mt label{display:grid;grid-template-columns:110px 1fr;gap:10px;align-items:center;font-size:.9rem;font-weight:600}
+.custom{margin-top:12px;max-width:420px}
+
+.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(250,250,250,.9);backdrop-filter:blur(12px);border-top:1px solid var(--line);z-index:30}
+.nav[hidden]{display:none}
+.nav .wrap{display:flex;justify-content:space-between;align-items:center;height:72px;gap:10px}
+.btn{font:500 .95rem var(--font);border-radius:var(--pill);padding:12px 22px;border:1px solid var(--line2);background:transparent;color:#374151;cursor:pointer;transition:background .15s,transform .15s}
+.btn:hover{background:#f3f4f6}
+.btn.pri{background:var(--ink);border-color:var(--ink);color:#fff;box-shadow:var(--shadow-lg)}
+.btn.pri:hover{background:#1f2937;transform:translateY(-1px)}
+.btn[disabled]{opacity:.4;cursor:default}
+
+.welcome .logo-lg{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.welcome .logo-lg svg{width:48px;height:48px}
+.welcome .logo-lg .wm{font-size:1.7rem}
+.welcome ul{margin:0 0 24px;padding-left:20px;color:var(--body)}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+
+.sum{margin-top:22px;display:grid;gap:14px}
+.grp{border:1px solid var(--line);border-radius:20px;padding:18px 20px;background:#fff}
+.grp header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.grp header h3{margin:0}
+.linkbtn{background:none;border:0;color:var(--accent-d);font:600 .85rem var(--font);cursor:pointer;padding:4px}
+dl{margin:0;display:grid;gap:8px}
+dt{font-size:.78rem;color:var(--muted);font-weight:600}
+dd{margin:0;white-space:pre-wrap;word-break:break-word}
+.empty{color:var(--muted);font-size:.9rem;margin:0}
+.status{margin-top:14px;font-weight:600}
+.status.ok{color:var(--ok)} .status.err{color:#b42318}
+.note{font-size:.88rem;color:var(--muted)}
+
+input[type=date],input[type=month]{width:100%;max-width:260px;font:inherit;padding:12px 14px;border:1px solid var(--line2);border-radius:14px;background:#fff;color:var(--ink)}
+input[type=date]:focus,input[type=month]:focus{outline:3px solid #3b82f640;border-color:var(--accent)}
+.prog button.gap{margin-left:10px}
+.rec{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:9999px;background:var(--soft);color:var(--accent-dd);font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;vertical-align:2px}
+.mt.cols{grid-template-columns:repeat(3,1fr);gap:12px}
+.mt.cols label{grid-template-columns:1fr;gap:6px}
+.list{display:grid;gap:8px}
+.addbtn{margin-top:10px;padding:8px 16px;font-size:.88rem}
+.addbtn[hidden]{display:none}
+.callout{margin-top:6px;padding:16px 18px;border-radius:16px;background:var(--soft);color:var(--accent-dd);font-size:.92rem;font-weight:500}
+.callout p{margin:0 0 4px}
+.callout p:last-child{margin:0}
+@media (max-width:760px){.mt.cols{grid-template-columns:1fr}}
+@media (max-width:560px){
+  .card{padding:24px 18px}
+  .mt label{grid-template-columns:1fr}
+  .btn{padding:12px 18px}
+  #ttl{display:none}
+}
+@media print{
+  body{background:#fff;padding:0}
+  .nav,.noprint,.linkbtn,.prog,#saved{display:none!important}
+  .card{border:0;box-shadow:none;padding:0}
+  .top{position:static;border:0}
+}
+</style>
+</head>
+<body>
+<noscript>This form needs JavaScript enabled.</noscript>
+<header class="top">
+  <div class="wrap"><div class="brand" style="display:flex;align-items:center"><svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><mask id="mh" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect width="100" height="100" rx="24" fill="white"/></mask><g mask="url(#mh)"><rect width="100" height="100" rx="24" fill="#000000"/><path d="M25 30L45 80L65 30" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 30L75 80L95 30" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><circle cx="85" cy="20" r="6" fill="#3B82F6"/></g></svg><span class="wm">WeGotSites</span><span id="ttl"></span></div><span id="saved"></span></div>
+  <div class="prog" id="prog" aria-label="Progress"></div>
+</header>
+<main class="wrap"><section id="stage"></section></main>
+<footer class="nav" id="nav" hidden>
+  <div class="wrap">
+    <button class="btn" id="back" type="button">&larr; Back</button>
+    <button class="btn pri" id="next" type="button">Skip &rarr;</button>
+  </div>
+</footer>
+
+<script>
+/* ===== SETTINGS (edit these) ===== */
+const CONFIG = {
+  title: "Client Onboarding Form",
+  studio: "WeGotSites",
+  kicker: "Website & Local SEO onboarding",
+  intro: "Please complete this form to help our team understand your business, brand identity, services, products and marketing goals. It helps us design your website and build an effective Local SEO and Website SEO strategy.",
+  bullets: [
+    "Follow the steps in order — business first, then website, then SEO assets.",
+    "About 20 minutes — mostly tapping options.",
+    "Questions marked Recommended help us the most.",
+    "Paste a shared Google Drive link for photos, logos, and docs.",
+    "Your progress is saved on this device, so you can close it and come back."
+  ],
+  email: "",            // where clients should send the answers (optional, enables the Email button)
+  endpoint: "",         // optional: form endpoint (Formspree, Getform, Make/Zapier webhook) to receive answers as JSON
+  fileName: "client-onboarding",
+  storageKey: "onboardingV2",
+  submitLabel: "Submit Brand Information",
+  thanks: "Thank you for providing your business information. Our team will use these details to understand your brand, improve your online presence, and develop an effective SEO strategy."
+};
+
+/* ===== QUESTIONS (edit freely) =====
+   field types: single | multi | select | text | url | email | tel | date | textarea | colors | multitext | list
+   option: "Label"  or  {v:"Label", d:"description"}
+   other:true adds an "Other" option with a text box
+   star:true shows a "Recommended" tag (still skippable)
+   list: repeatable inputs  {start:N, max:N, ph:"placeholder"}
+   showIf(a): show only when it returns true (a = answers so far) */
+const CATS = ["Car shop / dealership","Auto repair / garage","Car wash & detailing","Bike / cycle shop","Plumber","Electrician","HVAC contractor","Carpenter / woodworking","Furniture & cabinets","Painter","Roofing contractor","General contractor","Landscaper","Cleaning service","Moving company","Pest control service","Locksmith","Appliance repair service","Phone repair shop","Hair salon","Barber shop","Spa","Dentist","Medical clinic","Pet groomer","Gym","Bakery","Restaurant","Grocery store","Dry cleaner","Tailor","Photographer","Party equipment rental","Tutoring service","Accountant","Lawyer"];
+const YN = ["Yes","No"];
+const TIMES = ["5:00 AM","5:30 AM","6:00 AM","6:30 AM","7:00 AM","7:30 AM","8:00 AM","8:30 AM","9:00 AM","9:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:00 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM","4:30 PM","5:00 PM","5:30 PM","6:00 PM","6:30 PM","7:00 PM","7:30 PM","8:00 PM","8:30 PM","9:00 PM","9:30 PM","10:00 PM","10:30 PM","11:00 PM","11:30 PM","Midnight"];
+const COLORS = [["Red","#e5484d"],["Orange","#f2762e"],["Yellow","#f6c445"],["Green","#30a46c"],["Teal","#14a39a"],["Blue","#2f6fed"],["Navy","#1b2a5a"],["Purple","#7c5cff"],["Pink","#e8579a"],["Brown","#8a5a3c"],["Black","#111218"],["White","#ffffff"],["Grey","#8b90a0"],["Gold","#c9a227"]];
+const STEPS = [
+ /* ===== 1 · BUSINESS IDENTITY ===== */
+ { id:"identity", part:"1 · Business", title:"Business identity", intro:"Who you are — name, category, and basics. We ask these once.",
+   fields:[
+   {id:"bizName", label:"Business name", star:true, type:"text", placeholder:"e.g. Green Leaf Plumbing", hint:"Leave blank if you don't have one yet."},
+   {id:"primaryCat", label:"Primary business category", star:true, type:"select", other:true, options:CATS, hint:"The category that best describes your business on Google."},
+   {id:"addCats", label:"Additional business categories", hint:"Tap any others that fit (up to 9).", type:"multi", other:true, options:CATS},
+   {id:"tagline", label:"Tagline or slogan", type:"text", placeholder:"Optional"},
+   {id:"established", label:"Year established", type:"month", hint:"Month and year. An approximate date is fine."}
+ ]},
+
+ /* ===== 2 · WHAT YOU OFFER ===== */
+ { id:"offerings", part:"2 · Offerings", title:"Services & customers", intro:"What you sell and who you serve — asked once here.",
+   fields:[
+   {id:"addServices", label:"Your services or products", star:true, hint:"List everything you offer. One per line.", type:"textarea", placeholder:"One per line"},
+   {id:"sellProducts", label:"Do you sell any products?", type:"single", options:YN},
+   {id:"count", label:"Roughly how many products or listings?", type:"single", options:["1–10","11–50","51–200","200+"], showIf:a=>a.sellProducts==="Yes"},
+   {id:"productSheet", label:"Product information (Google Sheets link)", type:"url", placeholder:"https://docs.google.com/spreadsheets/...", showIf:a=>a.sellProducts==="Yes",
+     hint:"For each product: name, image (Google Drive link), price, short description, and product page URL if available."},
+   {id:"usp", label:"What makes you different?", hint:"Pick all that apply.", type:"multi", other:true, options:["Lower prices","High quality","Years of experience","Local & personal","Fast service","Warranty / guarantee","Custom / made-to-order","Eco-friendly","Wide selection","Expert advice"]},
+   {id:"specialties", label:"Any specialties?", type:"textarea", placeholder:"Optional — niches or signature services"},
+   {id:"audience", label:"Who are your customers?", type:"multi", other:true, options:["Individuals","Families","Students / young adults","Small businesses","Large companies","Local community","Tourists / visitors"]},
+   {id:"offer", label:"What do you offer customers?", type:"multi", options:["Free quotes","Free estimates"]},
+   {id:"emergency", label:"Do you provide 24-hour emergency service?", type:"single", options:YN},
+   {id:"how", label:"How you work", hint:"Three simple steps. Example: 1) Customer contacts us. 2) We inspect and advise. 3) We complete the work.", type:"multitext", cols:true, items:[
+     {k:"s1",label:"Step 1",ph:"e.g. Customer contacts us"},
+     {k:"s2",label:"Step 2",ph:"e.g. We inspect and advise"},
+     {k:"s3",label:"Step 3",ph:"e.g. We do the work"}]}
+ ]},
+
+ /* ===== 3 · LOCATIONS & HOURS ===== */
+ { id:"locations", part:"3 · Locations", title:"Locations & hours", intro:"Where you are, where you work, and when you're open.",
+   fields:[
+   {id:"locMode", label:"Where do you operate?", type:"single", options:["One location","Several locations / cities","Online only","We travel to customers"]},
+   {id:"locCount", label:"How many locations?", type:"single", options:["2–3","4–5","6–10","More than 10"], showIf:a=>a.locMode==="Several locations / cities"},
+   {id:"physical", label:"Do you have a physical place in each location?", type:"single", options:["Yes, a shop or office","Some do","Appointment or meetup only","No physical place"]},
+   {id:"separatePages", label:"Should each location get its own page?", type:"single", options:["Yes, one page per location","No, one page lists all","Not sure"]},
+   {id:"address", label:"Business address", star:true, type:"textarea", placeholder:"Street, City, State, ZIP code, Country", hint:"For several locations, list each address on its own line."},
+   {id:"primaryArea", label:"Primary service area", star:true, type:"text", placeholder:"City, State"},
+   {id:"addAreas", label:"Additional service areas", hint:"Additional cities or locations you serve. Up to 19.", type:"list", start:4, max:19, ph:"City, State"},
+   {id:"hoursPattern", label:"Which days are you open?", type:"single", options:["Monday–Friday","Monday–Saturday","7 days a week","24/7","By appointment only","Different per location","Custom days"]},
+   {id:"hoursOpen", label:"Usual opening time", star:true, type:"select", options:TIMES, showIf:a=>a.hoursPattern && !["24/7","By appointment only"].includes(a.hoursPattern)},
+   {id:"hoursClose", label:"Usual closing time", star:true, type:"select", options:TIMES, showIf:a=>a.hoursPattern && !["24/7","By appointment only"].includes(a.hoursPattern)},
+   {id:"hoursWeekend", label:"Weekend hours", type:"single", options:["Same as weekdays","Shorter hours","Closed Saturday","Closed Sunday","Closed both weekend days","By appointment on weekends"], showIf:a=>["Monday–Saturday","7 days a week","Custom days"].includes(a.hoursPattern)},
+   {id:"hoursSatOpen", label:"Saturday opening time", type:"select", options:TIMES, showIf:a=>a.hoursWeekend==="Shorter hours"},
+   {id:"hoursSatClose", label:"Saturday closing time", type:"select", options:TIMES, showIf:a=>a.hoursWeekend==="Shorter hours"},
+   {id:"hoursExtras", label:"Anything else about your hours?", hint:"Pick all that apply.", type:"multi", options:["Early mornings","Late evenings","Closed for lunch","Seasonal hours","Hours vary by location","Emergency / after-hours available"]},
+   {id:"specialHours", label:"Upcoming special hours / holiday hours", hint:"Pick all that apply.", type:"multi", other:true, options:[
+     "Open every day, including holidays",
+     "Open every day except weekends",
+     "Open every day except weekends; occasionally closed",
+     "Closed on weekends and U.S. federal holidays",
+     "Closed on major U.S. holidays only (Thanksgiving, Christmas, New Year’s)",
+     "Closed on Thanksgiving and Christmas only",
+     "Reduced hours on holidays",
+     "By appointment on holidays",
+     "Always closed on Sundays and holidays"
+   ]},
+   {id:"gbp", label:"Do you have a Google Business Profile?", type:"single", options:["Yes","No","Not sure"]},
+   {id:"gbpUrl", label:"Google Business Profile URL", star:true, type:"url", placeholder:"https://", showIf:a=>a.gbp==="Yes"}
+ ]},
+
+ /* ===== 4 · WEBSITE PROJECT ===== */
+ { id:"setup", part:"4 · Website", title:"Website project", intro:"Size, goals, and what you already have online.",
+   fields:[
+   {id:"type", label:"What kind of website is this?", type:"select", other:true, options:["Local business","Business / company","Restaurant","Hospitality","SaaS","Nonprofit","Blog"]},
+   {id:"structure", label:"How big should it be?", type:"single", cards:true, options:[
+     {v:"One-page landing page", d:"Everything on a single scrolling page"},
+     {v:"Multi-page website", d:"Several pages with a menu"},
+     {v:"Not sure, advise me", d:"We'll recommend what fits"}]},
+   {id:"goal", label:"Website goals", hint:"What should this website do for your business? Pick as many as you like.", type:"multi", cards:true, other:true, options:[
+     {v:"Get more phone calls", d:"Visitors tap to call you straight away"},
+     {v:"Collect leads / enquiries", d:"Contact and quote request forms"},
+     {v:"Replace an outdated website", d:"Modern look, better results"},
+     {v:"Rank higher in search results", d:"More organic search visibility"},
+     {v:"Increase website traffic", d:"More visitors to your site"}]},
+   {id:"hasDomain", label:"Do you own a domain name?", type:"single", options:["Yes","No, I need help","Not sure"]},
+   {id:"domainName", label:"What is your domain?", type:"text", placeholder:"example.com", showIf:a=>a.hasDomain==="Yes"},
+   {id:"existing", label:"Do you have an existing website?", type:"single", options:YN},
+   {id:"existingUrl", label:"Website URL", star:true, type:"url", placeholder:"https://", showIf:a=>a.existing==="Yes"},
+   {id:"existingKeep", label:"What should we keep or change?", type:"textarea", placeholder:"Optional", showIf:a=>a.existing==="Yes"}
+ ]},
+
+ { id:"pages", part:"4 · Website", title:"Pages & content", intro:"Which pages you need and who writes the copy.",
+   fields:[
+   {id:"pages", label:"Which pages do you need?", type:"multi", other:true, options:["Home","About","Services","Products / Shop","Portfolio / Gallery","Reviews / Testimonials","Blog / News","FAQ","Contact","Pricing","Team","Careers","Locations","Booking","Policies (privacy, terms, returns)"]},
+   {id:"separateItems", label:"Do your services or product types need their own pages?", type:"single", options:["Yes, each one separately","No, one page for all","Not sure"]},
+   {id:"copy", label:"Who writes the text?", type:"single", options:["I'll write it","Please write it for me","A mix of both","Not sure"]},
+   {id:"have", label:"What written content do you already have?", type:"multi", options:["Price list","FAQ questions","Old website text","Brochure"]},
+   {id:"langs", label:"Website language(s)", type:"multi", other:true, options:["English","Spanish","French"]}
+ ]},
+
+ { id:"features", part:"4 · Website", title:"Features & actions", intro:"What should visitors be able to do?",
+   fields:[
+   {id:"primaryCta", label:"What should a visitor do on your site?", hint:"Pick all that matter — not just one.", type:"multi", options:["Call us","Fill in a form","Book online","Buy online","Visit in person","Message on WhatsApp","Download something"]},
+   {id:"contactWays", label:"How should people reach you?", type:"multi", options:["Click-to-call button","Contact form","Quote request form","WhatsApp button","Live chat","Email link","Newsletter sign-up"]},
+   {id:"extras", label:"Extra features", type:"multi", other:true, options:["Photo & video gallery","Reviews feed","Social media feed","Member login","Search","Calculators / quizzes","File downloads","Cookie banner","Accessibility focus"]},
+   {id:"integrations", label:"Tools to connect", type:"multi", other:true, options:["Google Analytics","Meta Pixel","Mailchimp / email tool","CRM","Calendly / booking tool","Stripe","PayPal","Zapier","Not sure"]},
+   {id:"notifyEmail", label:"Where should form enquiries be sent?", type:"email", placeholder:"you@example.com"},
+   {id:"editing", label:"Who will update the content later?", type:"single", options:["I will, using an easy editor","You (the developer)","Both occasionally","Not sure"]}
+ ]},
+
+ /* ===== 5 · BRAND & LOOK ===== */
+ { id:"design", part:"5 · Brand", title:"Logo & look", intro:"Your logo and visual style — once, here.",
+   fields:[
+   {id:"logo", label:"Do you have a logo?", type:"single", options:["Yes, I have it","No, I need one","Text-only is fine","Not sure"]},
+   {id:"logoBanner", label:"Business logo & website banner (Google Drive link)", star:true, type:"url", placeholder:"https://drive.google.com/...", hint:"Share your official logo and banner images."},
+   {id:"brandColors", label:"Brand colors", type:"single", options:["I have brand colors","Help me choose","No preference"]},
+   {id:"colors", label:"Colors you like", hint:"Tap as many as you want, or type HEX codes below.", type:"colors", options:COLORS},
+   {id:"mood", label:"How should the site feel?", type:"multi", other:true, options:["Modern","Minimal & clean","Bold & energetic","Playful","Luxury","Friendly & warm","Corporate & trustworthy","Techy","Natural / earthy","Vintage"]},
+   {id:"voice", label:"Brand voice", type:"multi", other:true, options:["Professional","Friendly","Casual","Authoritative","Technical","Premium","Warm","Witty"]},
+   {id:"theme", label:"Light or dark?", type:"single", options:["Light","Dark","Both (switchable)","No preference"]},
+   {id:"font", label:"Typography style", type:"single", options:["Clean modern sans-serif","Elegant serif","Bold display","Rounded & friendly","Designer's choice"]},
+   {id:"motion", label:"How much animation?", type:"single", options:["None","Subtle","Rich & dynamic","No preference"]},
+   {id:"imagery", label:"What kind of visuals?", type:"multi", options:["My own photos","Stock photos","Illustrations","Icons","Video","3D / graphics","AI-generated images are OK"]},
+   {id:"refs", label:"Websites you like", hint:"Paste up to 3 links. Skip if you don't have any.", type:"multitext", items:[
+     {k:"ref1",label:"Website 1",ph:"https://"},{k:"ref2",label:"Website 2",ph:"https://"},{k:"ref3",label:"Website 3",ph:"https://"}]},
+   {id:"like", label:"What do you like about them?", type:"multi", options:["Layout","Colors","Typography","Animations","Photography","Simplicity","Navigation","Overall feel"]},
+   {id:"dislike", label:"Anything you dislike or want to avoid?", type:"textarea", placeholder:"Optional"}
+ ]},
+
+ /* ===== 6 · CONTACT & TRUST ===== */
+ { id:"contact", part:"6 · Contact", title:"Contact & trust", intro:"How customers reach you and why they should trust you.",
+   fields:[
+   {id:"phone", label:"Primary phone number", star:true, type:"tel", placeholder:"+1 ...", hint:"The number used on your Google Business Profile."},
+   {id:"phoneMulti", label:"One number for everything?", type:"single", options:["One number for all locations","A different number per location","Not sure"]},
+   {id:"bizEmail", label:"Business email address", type:"email", placeholder:"hello@example.com"},
+   {id:"bookingUrl", label:"Booking URL", type:"url", placeholder:"https://", hint:"Your online booking page, if you have one."},
+   {id:"otherContact", label:"Anything else to show?", hint:"Second number, support line, contact person, etc.", type:"textarea", placeholder:"Optional"},
+   {id:"reviewsFrom", label:"Where are your customer reviews?", type:"multi", options:["Google","Facebook","Yelp","Trustpilot","Instagram","Direct from customers","None yet"]},
+   {id:"promises", label:"What do you promise customers?", type:"multi", other:true, options:["Quality inspection","Warranty","Return policy","Money-back guarantee","Free delivery","Free consultation","Fair pricing"]},
+   {id:"proof", label:"What can you show off?", type:"multi", options:["Number of customers served","Awards","Media mentions"]},
+   {id:"socials", label:"Social media profiles", hint:"Only the accounts you use.", type:"multitext", items:[
+     {k:"facebook",label:"Facebook",ph:"https://"},{k:"instagram",label:"Instagram",ph:"https://"},{k:"linkedin",label:"LinkedIn",ph:"https://"},
+     {k:"youtube",label:"YouTube",ph:"https://"},{k:"tiktok",label:"TikTok",ph:"https://"},{k:"x",label:"X (Twitter)",ph:"https://"},{k:"threads",label:"Threads",ph:"https://"}]},
+   {id:"socialOther", label:"Other social media links", type:"list", start:1, max:8, ph:"https://"},
+   {id:"brandNames", label:"Partner brands / companies you've worked with", type:"textarea", placeholder:"One per line — optional"},
+   {id:"showBrands", label:"Showcase these brands on your website?", type:"single", options:YN}
+ ]},
+
+ /* ===== 7 · LOCAL SEO ===== */
+ { id:"attributes", part:"7 · Local SEO", title:"Google Business Profile details", intro:"Facilities and attributes for your Google listing — not repeated elsewhere.",
+   fields:[
+   {id:"parking", label:"Parking", type:"multi", options:["Free parking","Paid parking","Private parking","Street parking","Parking lot"]},
+   {id:"payments", label:"Accepted payment methods", type:"multi", other:true, options:["Cash","Credit cards","Debit cards","Digital payments"]},
+   {id:"access", label:"Accessibility & ownership", type:"multi", options:["Wheelchair accessible","LGBTQ+ friendly","Women-owned business","Veteran-owned business"]},
+   {id:"serviceModes", label:"Service options", type:"multi", options:["Online appointments","On-site services"]},
+   {id:"attrOther", label:"Other facilities or accessibility features", type:"textarea", placeholder:"Optional"}
+ ], after:["Google Business Profile tips:","• Upload real business photos and videos regularly.","• Publish posts consistently.","• Encourage genuine Google reviews."]},
+
+ { id:"seo", part:"7 · Local SEO", title:"Keywords & competitors", intro:"What you want to rank for — SEO-only questions.",
+   fields:[
+   {id:"mainKeyword", label:"Main target keyword", star:true, type:"text", placeholder:"e.g. emergency plumber Minneapolis"},
+   {id:"addKeywords", label:"Additional target keywords", type:"textarea", placeholder:"One per line"},
+   {id:"competitors", label:"Main competitors", hint:"Website or Google Business Profile URLs. Up to 5.", type:"list", start:3, max:5, ph:"https://"}
+ ]},
+
+ { id:"directories", part:"7 · Local SEO", title:"Local directories", intro:"Existing listings on other directories.",
+   fields:[
+   {id:"dirs", label:"Existing listings", hint:"Paste the listing URL, or write “access required” if we need access.", type:"multitext", items:[
+     {k:"yelp",label:"Yelp",ph:"Listing URL / access required"},{k:"yp",label:"Yellow Pages",ph:"Listing URL / access required"},
+     {k:"bing",label:"Bing Places",ph:"Listing URL / access required"},{k:"apple",label:"Apple Maps",ph:"Listing URL / access required"}]},
+   {id:"dirOther", label:"Other local business directories", type:"textarea", placeholder:"Optional"},
+   {id:"dirAccess", label:"Directory access notes", hint:"Names, URLs, and access status. Invite us officially — don’t share passwords.", type:"textarea", placeholder:"Optional"}
+ ], after:["Please grant access through official invitations where supported. Do not share account passwords."]},
+
+ /* ===== 8 · ASSETS ===== */
+ { id:"media", part:"8 · Assets", title:"Photos, videos & projects", intro:"Share Google Drive or Sheets links. Skip what you don’t have yet.",
+   fields:[
+   {id:"workPhotos", label:"Work / project photos", type:"url", placeholder:"https://drive.google.com/..."},
+   {id:"videos", label:"Work / promotional videos", type:"url", placeholder:"https://drive.google.com/..."},
+   {id:"baSheet", label:"Before & after photos (Google Sheets link)", type:"url", placeholder:"https://docs.google.com/spreadsheets/...",
+     hint:"For each project: name, before/after Drive links, short headline, and what improved."},
+   {id:"portfolioSheet", label:"Recent project portfolio (Google Sheets link)", type:"url", placeholder:"https://docs.google.com/spreadsheets/...",
+     hint:"3–6 recent projects: title, location, date (optional), description, images, videos."},
+   {id:"otherFiles", label:"Any other files", type:"url", placeholder:"https://drive.google.com/..."},
+   {id:"certNames", label:"Certification names", type:"text", placeholder:"Optional"},
+   {id:"licenses", label:"License details", type:"text", placeholder:"Optional"},
+   {id:"certDocs", label:"Certification / license documents (Google Drive link)", type:"url", placeholder:"https://drive.google.com/..."}
+ ], after:["We may use recent projects for a portfolio section on your website."]},
+
+ /* ===== 9 · FINISH ===== */
+ { id:"project", part:"9 · Finish", title:"Timeline & your contact", intro:"Last step — when you need it and how we reach you.",
+   fields:[
+   {id:"timeline", label:"When do you need it?", type:"single", options:["As soon as possible","Within 2 weeks","Within a month","In 2–3 months","Flexible"]},
+   {id:"yourName", label:"Your name", type:"text", placeholder:"Business owner or main contact"},
+   {id:"yourEmail", label:"Your email", type:"email", placeholder:"you@example.com"},
+   {id:"contactPref", label:"Best way to reach you", type:"single", options:["Email","Phone call","WhatsApp","Video call"]},
+   {id:"notes", label:"Anything else we should know?", type:"textarea", placeholder:"Optional"}
+ ]}
+];
+
+/* ===== ENGINE ===== */
+const $ = (s,r=document)=>r.querySelector(s);
+const KEY = CONFIG.storageKey;
+const LOGO_SVG = '<svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><mask id="mw" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="100"><rect width="100" height="100" rx="24" fill="white"/></mask><g mask="url(#mw)"><rect width="100" height="100" rx="24" fill="#000000"/><path d="M25 30L45 80L65 30" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M55 30L75 80L95 30" stroke="white" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/><circle cx="85" cy="20" r="6" fill="#3B82F6"/></g></svg>';
+let answers = {};
+let view = "welcome";
+
+function h(tag, props, ...kids){
+  const e = document.createElement(tag);
+  for(const [k,v] of Object.entries(props||{})){
+    if(k==="class") e.className=v;
+    else if(k.startsWith("on")) e.addEventListener(k.slice(2),v);
+    else if(v===true) e.setAttribute(k,"");
+    else if(v!==false && v!=null) e.setAttribute(k,v);
+  }
+  kids.flat(Infinity).forEach(c=>{ if(c==null||c===false) return; e.append(c.nodeType?c:document.createTextNode(c)); });
+  return e;
+}
+const optV = o => typeof o==="string" ? o : o.v;
+const isEmpty = v => v==null || v==="" || (Array.isArray(v)&&(!v.length||v.every(x=>!String(x).trim()))) || (typeof v==="object"&&!Array.isArray(v)&&Object.values(v).every(x=>!x));
+const fieldVisible = f => !f.showIf || f.showIf(answers);
+const stepVisible = s => !s.showIf || s.showIf(answers);
+const visSteps = () => STEPS.filter(stepVisible);
+
+function answered(f){
+  if(f.type==="colors") return !isEmpty(answers[f.id]) || !isEmpty(answers[f.id+"_custom"]);
+  return !isEmpty(answers[f.id]);
+}
+function stepAnswered(s){ return s.fields.some(f=>fieldVisible(f)&&answered(f)); }
+
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify({answers,view})); $("#saved").textContent="Saved on this device ✓"; }
+  catch(e){ $("#saved").textContent=""; }
+}
+function load(){
+  try{ const d=JSON.parse(localStorage.getItem(KEY)||"null"); if(d&&d.answers){ answers=d.answers; return d.view||"welcome"; } }catch(e){}
+  return "welcome";
+}
+
+/* ----- fields ----- */
+function otherBox(f, shownWhen){
+  const inp = h("input",{type:"text",class:"other",placeholder:"Please specify",value:answers[f.id+"_other"]||"","aria-label":f.label+" – other"});
+  inp.addEventListener("input",()=>{ answers[f.id+"_other"]=inp.value; changed(); });
+  inp.hidden = !shownWhen();
+  return inp;
+}
+
+function fieldEl(f){
+  const wrap = h("div",{class:"field","data-id":f.id});
+  wrap.append(h(f.type==="single"||f.type==="multi"||f.type==="colors"||f.type==="multitext"?"div":"label",
+    {class:"q",for:null}, f.label, f.star?h("span",{class:"rec"},"Recommended"):null));
+  if(f.hint) wrap.append(h("p",{class:"hint"},f.hint));
+  const t=f.type;
+
+  if(t==="single"||t==="multi"){
+    const multi = t==="multi";
+    const group = h("div",{class:f.cards?("cards"+(multi?" multi":"")):"chips",role:multi?"group":"radiogroup","aria-label":f.label});
+    const opts = f.other ? [...f.options,"Other"] : f.options;
+    const btns=[];
+    let box=null;
+    const isOn = v => multi ? (answers[f.id]||[]).includes(v) : answers[f.id]===v;
+    const otherOn = () => isOn("Other");
+    opts.forEach(o=>{
+      const v=optV(o);
+      const co = f.cards ? (typeof o!=="string" ? o : {v:o, d:"Something else"}) : null;
+      const b = co
+        ? h("button",{type:"button",class:"cardopt","aria-pressed":String(isOn(v))}, h("span",{class:"mk","aria-hidden":"true"}), h("span",{class:"tx"}, h("b",{},co.v), co.d?h("small",{},co.d):null))
+        : h("button",{type:"button",class:"chip","aria-pressed":String(isOn(v))}, v);
+      b.addEventListener("click",()=>{
+        if(multi){
+          const cur=new Set(answers[f.id]||[]);
+          cur.has(v)?cur.delete(v):cur.add(v);
+          answers[f.id]=[...cur];
+        }else{
+          answers[f.id] = answers[f.id]===v ? "" : v;
+        }
+        btns.forEach(x=>x.b.setAttribute("aria-pressed",String(isOn(x.v))));
+        if(box) box.hidden=!otherOn();
+        changed();
+      });
+      btns.push({b,v});
+      group.append(b);
+    });
+    wrap.append(group);
+    if(f.other){ box=otherBox(f,otherOn); wrap.append(box); }
+  }
+  else if(t==="select"){
+    const sel=h("select",{"aria-label":f.label});
+    sel.append(h("option",{value:""},"Choose one…"));
+    [...f.options,...(f.other?["Other"]:[])].forEach(o=>sel.append(h("option",{value:o},o)));
+    sel.value=answers[f.id]||"";
+    const box=f.other?otherBox(f,()=>answers[f.id]==="Other"):null;
+    sel.addEventListener("change",()=>{ answers[f.id]=sel.value; if(box) box.hidden=sel.value!=="Other"; changed(); });
+    wrap.append(sel); if(box) wrap.append(box);
+  }
+  else if(t==="list"){
+    if(!Array.isArray(answers[f.id])||!answers[f.id].length) answers[f.id]=Array(f.start||1).fill("");
+    const arr=answers[f.id];
+    const box=h("div",{class:"list"});
+    const add=h("button",{type:"button",class:"btn addbtn"},"+ Add another");
+    const dlid = f.datalist ? "dl_"+f.id : null;
+    if(f.datalist) wrap.append(h("datalist",{id:dlid}, f.datalist.map(o=>h("option",{value:o}))));
+    const draw=()=>{
+      box.replaceChildren();
+      arr.forEach((val,i)=>{
+        const inp=h("input",{type:"text",placeholder:f.ph||"","aria-label":f.label+" "+(i+1),value:val,autocomplete:"off"});
+        if(dlid) inp.setAttribute("list",dlid);
+        inp.addEventListener("input",()=>{ arr[i]=inp.value; changed(); });
+        box.append(inp);
+      });
+      add.hidden = arr.length>=(f.max||20);
+    };
+    add.addEventListener("click",()=>{ arr.push(""); draw(); box.lastChild.focus(); save(); });
+    draw();
+    wrap.append(box, add);
+  }
+  else if(t==="colors"){
+    const sw = h("div",{class:"swatches"});
+    const isOn = n => (answers[f.id]||[]).includes(n);
+    const btns=[];
+    f.options.forEach(([n,c])=>{
+      const b=h("button",{type:"button",class:"sw","aria-pressed":String(isOn(n)),title:n}, h("i",{style:"background:"+c}), n);
+      b.addEventListener("click",()=>{
+        const cur=new Set(answers[f.id]||[]); cur.has(n)?cur.delete(n):cur.add(n); answers[f.id]=[...cur];
+        btns.forEach(x=>x.b.setAttribute("aria-pressed",String(isOn(x.n)))); changed();
+      });
+      btns.push({b,n}); sw.append(b);
+    });
+    wrap.append(sw);
+    const c=h("input",{type:"text",class:"custom",placeholder:"Or type colors / hex codes, e.g. #1A73E8, sky blue","aria-label":"Custom colors",value:answers[f.id+"_custom"]||""});
+    c.addEventListener("input",()=>{ answers[f.id+"_custom"]=c.value; changed(); });
+    wrap.append(c);
+  }
+  else if(t==="multitext"){
+    const g=h("div",{class:"mt"+(f.cols?" cols":"")});
+    answers[f.id]=answers[f.id]||{};
+    f.items.forEach(it=>{
+      const i=h("input",{type:"text",placeholder:it.ph||"",value:answers[f.id][it.k]||""});
+      i.addEventListener("input",()=>{ answers[f.id][it.k]=i.value; changed(); });
+      g.append(h("label",{},it.label,i));
+    });
+    wrap.append(g);
+  }
+  else if(t==="textarea"){
+    const i=h("textarea",{placeholder:f.placeholder||"","aria-label":f.label}); i.value=answers[f.id]||"";
+    i.addEventListener("input",()=>{ answers[f.id]=i.value; changed(); }); wrap.append(i);
+  }
+  else {
+    const i=h("input",{type:t==="url"?"url":t,placeholder:f.placeholder||"","aria-label":f.label,autocomplete:"off"});
+    if(f.datalist){ const dl=h("datalist",{id:"dl_"+f.id}, f.datalist.map(o=>h("option",{value:o}))); i.setAttribute("list","dl_"+f.id); wrap.append(dl); }
+    i.value=answers[f.id]||"";
+    i.addEventListener("input",()=>{ answers[f.id]=i.value; changed(); }); wrap.append(i);
+  }
+  return wrap;
+}
+
+/* ----- navigation ----- */
+function changed(){ refreshVisibility(); renderProgress(); updateNav(); save(); }
+
+function refreshVisibility(){
+  const s = STEPS.find(x=>x.id===view); if(!s) return;
+  s.fields.forEach(f=>{ const el=$('.field[data-id="'+f.id+'"]'); if(el) el.hidden=!fieldVisible(f); });
+}
+function go(v){ view=v; render(); window.scrollTo({top:0}); save(); }
+function idx(){ return visSteps().findIndex(s=>s.id===view); }
+function nextView(){ const v=visSteps(), i=idx(); return i<v.length-1 ? v[i+1].id : "review"; }
+function prevView(){ const v=visSteps(); if(view==="review") return v[v.length-1].id; const i=idx(); return i>0 ? v[i-1].id : "welcome"; }
+
+function renderProgress(){
+  const p=$("#prog"); p.replaceChildren();
+  if(view==="welcome") return;
+  const v=visSteps(), cur = view==="review" ? v.length : idx();
+  v.forEach((s,i)=>{
+    const b=h("button",{type:"button",class:(i===cur?"cur":(stepAnswered(s)?"done":""))+(i>0&&v[i-1].part!==s.part?" gap":""),title:s.title,"aria-label":"Go to "+s.title});
+    b.addEventListener("click",()=>go(s.id)); p.append(b);
+  });
+  p.append(h("button",{type:"button",class:view==="review"?"cur":"",title:"Review","aria-label":"Review",onclick:()=>go("review")}));
+}
+function updateNav(){
+  const nav=$("#nav");
+  if(view==="welcome"||view==="review"){ nav.hidden=true; return; }
+  nav.hidden=false;
+  const s=STEPS.find(x=>x.id===view);
+  $("#next").textContent = (stepAnswered(s)?"Next":"Skip")+" →";
+}
+
+function render(){
+  $("#ttl").textContent=CONFIG.title;
+  const stage=$("#stage");
+  if(view==="welcome") stage.replaceChildren(welcome());
+  else if(view==="review") stage.replaceChildren(review());
+  else{
+    const s=STEPS.find(x=>x.id===view) || (view="welcome", null);
+    if(!s) return render();
+    const v=visSteps(), i=idx();
+    stage.replaceChildren(h("div",{class:"card"},
+      h("p",{class:"kicker"},(s.part?s.part+" · ":"")+"Step "+(i+1)+" of "+v.length),
+      h("h2",{},s.title),
+      h("p",{class:"lead"},s.intro||""),
+      h("div",{class:"optional"},"✨ Nothing here is required. Skip anything you're not sure about."),
+      s.fields.map(fieldEl),
+      s.after ? h("div",{class:"callout"}, s.after.map(t=>h("p",{},t))) : null));
+    refreshVisibility();
+  }
+  renderProgress(); updateNav();
+}
+
+function welcome(){
+  const hasData = Object.values(answers).some(v=>!isEmpty(v));
+  return h("div",{class:"card welcome"},
+    (()=>{ const d=h("div",{class:"logo-lg"}); d.innerHTML=LOGO_SVG+'<span class="wm">WeGotSites</span>'; return d; })(),
+    h("p",{class:"kicker"},CONFIG.kicker||"Let's plan your website"),
+    h("h1",{}, ...(()=>{ const w=CONFIG.title.split(" "); return w.length>2 ? [w.slice(0,-2).join(" ")+" ", h("span",{class:"hl"},w.slice(-2).join(" "))] : [CONFIG.title]; })()),
+    h("p",{class:"lead"},CONFIG.intro),
+    h("div",{class:"optional"},"✨ Nothing is mandatory. Skip anything you don't know. Fill in what you can."),
+    h("ul",{}, CONFIG.bullets.map(b=>h("li",{},b))),
+    h("div",{class:"row"},
+      h("button",{class:"btn pri",type:"button",onclick:()=>go(visSteps()[0].id)}, hasData?"Continue":"Start"),
+      hasData ? h("button",{class:"btn",type:"button",onclick:()=>{ if(confirm("Clear all answers and start over?")){ answers={}; try{localStorage.removeItem(KEY);}catch(e){} go("welcome"); } }},"Start over") : null));
+}
+
+/* ----- formatting & summary ----- */
+function fmt(f){
+  const v=answers[f.id], o=(answers[f.id+"_other"]||"").trim();
+  const withOther = x => x==="Other" && o ? "Other: "+o : x;
+  if(f.type==="single"||f.type==="select") return withOther(v);
+  if(f.type==="multi") return (v||[]).map(withOther).join(", ");
+  if(f.type==="colors"){ const c=(answers[f.id+"_custom"]||"").trim(); return [(v||[]).join(", "), c].filter(Boolean).join(" + "); }
+  if(f.type==="list") return (v||[]).map(x=>String(x).trim()).filter(Boolean).join("\n");
+  if(f.type==="multitext") return f.items.map(it=>(v&&v[it.k]||"").trim()?it.label+": "+v[it.k].trim():"").filter(Boolean).join("\n");
+  return typeof v==="string" ? v.trim() : v;
+}
+function collect(){
+  const out=[]; let total=0, done=0;
+  visSteps().forEach(s=>{
+    const rows=[];
+    s.fields.forEach(f=>{ if(!fieldVisible(f)) return; total++; if(answered(f)){ const val=fmt(f); if(val){ done++; rows.push([f.label,val]); } } });
+    out.push({id:s.id,title:s.title,rows});
+  });
+  return {groups:out,total,done};
+}
+function asText(){
+  const {groups,done,total}=collect();
+  let t=CONFIG.title.toUpperCase()+"\nDate: "+new Date().toLocaleDateString()+"\nAnswered: "+done+" of "+total+" questions\n";
+  groups.forEach((g,i)=>{ if(!g.rows.length) return; t+="\n== "+(i+1)+". "+g.title+" ==\n"; g.rows.forEach(([q,a])=>{ t+="• "+q+"\n  "+a.replace(/\n/g,"\n  ")+"\n"; }); });
+  return t;
+}
+function asJSON(){
+  const {groups,done,total}=collect(); const o={title:CONFIG.title,date:new Date().toISOString(),answered:done,total,answers:{}};
+  groups.forEach(g=>{ if(!g.rows.length) return; o.answers[g.title]={}; g.rows.forEach(([q,a])=>{ o.answers[g.title][q]=a; }); });
+  return JSON.stringify(o,null,2);
+}
+function download(name,text,type){
+  const a=h("a",{href:URL.createObjectURL(new Blob([text],{type})),download:name}); document.body.append(a); a.click(); a.remove();
+}
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); return true; }
+  catch(e){ const ta=h("textarea",{style:"position:fixed;opacity:0"}); ta.value=t; document.body.append(ta); ta.select(); let ok=false; try{ ok=document.execCommand("copy"); }catch(_){} ta.remove(); return ok; }
+}
+
+function review(){
+  const {groups,done,total}=collect();
+  const status=h("p",{class:"status",role:"status"});
+  const say=(m,c)=>{ status.textContent=m; status.className="status "+(c||""); };
+  const actions=h("div",{class:"row noprint"});
+  if(CONFIG.endpoint) actions.append(h("button",{class:"btn pri",type:"button",onclick:async()=>{
+      say("Sending…");
+      try{ const r=await fetch(CONFIG.endpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:asJSON()});
+        if(!r.ok) throw new Error(r.status); say("✓ Sent! "+CONFIG.thanks,"ok"); }
+      catch(e){ say("Couldn't send automatically. Please use Download or Copy and send it to us.","err"); } }},CONFIG.submitLabel||"Send to us"));
+  if(CONFIG.email) actions.append(h("button",{class:CONFIG.endpoint?"btn":"btn pri",type:"button",onclick:()=>{
+      location.href="mailto:"+CONFIG.email+"?subject="+encodeURIComponent(CONFIG.title)+"&body="+encodeURIComponent("Hi,\n\nMy project brief is attached (downloaded file). If you can't attach it, I'll paste the answers below.\n\n"); }},"Email us"));
+  actions.append(
+    h("button",{class:(!CONFIG.endpoint&&!CONFIG.email)?"btn pri":"btn",type:"button",onclick:()=>download(CONFIG.fileName+".txt",asText(),"text/plain")},"Download summary (.txt)"),
+    h("button",{class:"btn",type:"button",onclick:async()=>{ const ok=await copyText(asText()); say(ok?"✓ Copied. You can paste it into an email or chat.":"Couldn't copy. Please use Download.",ok?"ok":"err"); }},"Copy summary"),
+    h("button",{class:"btn",type:"button",onclick:()=>download(CONFIG.fileName+".json",asJSON(),"application/json")},"Download (.json)"),
+    h("button",{class:"btn",type:"button",onclick:()=>window.print()},"Print / Save PDF"));
+  return h("div",{},
+    h("div",{class:"card",id:"summary"},
+      h("p",{class:"kicker"},"Final step"),
+      h("h2",{},"Review your answers"),
+      h("p",{class:"lead"},"You answered "+done+" of "+total+" questions. Anything left blank is fine, we'll sort it out together."),
+      h("div",{class:"noprint"},
+        h("div",{class:"optional"},"Happy with it? Send it to us using one of the options below."),
+        actions, status,
+        CONFIG.thanks ? h("p",{class:"note"},CONFIG.thanks) : null,
+        h("p",{class:"note"},CONFIG.endpoint||CONFIG.email ? "Logos, photos and other files can be shared by link or sent separately." : "Download or copy the summary and send it to us along with any logos or photos.")),
+      h("div",{class:"sum"}, groups.map(g=>h("section",{class:"grp"},
+        h("header",{},h("h3",{},g.title),h("button",{class:"linkbtn",type:"button",onclick:()=>go(g.id)},"Edit")),
+        g.rows.length ? h("dl",{},g.rows.map(([q,a])=>[h("dt",{},q),h("dd",{},a)])) : h("p",{class:"empty"},"Skipped"))))),
+    h("div",{class:"row noprint",style:"margin-top:16px"},
+      h("button",{class:"btn",type:"button",onclick:()=>go(prevView())},"← Back")));
+}
+
+/* ----- wire up ----- */
+$("#next").addEventListener("click",()=>go(nextView()));
+$("#back").addEventListener("click",()=>go(prevView()));
+view = load();
+if(view!=="welcome" && view!=="review" && !STEPS.some(s=>s.id===view)) view="welcome";
+render();
+</script>
+</body>
+</html>
